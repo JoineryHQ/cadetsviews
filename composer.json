@@ -1,0 +1,16 @@
+{
+    "name": "cadetsviews",
+    "type": "drupal-module",
+    "description": "Custom code-based alterations of Drupal views.",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/cadetsviews",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/cadetsviews",
+        "source": "http://cgit.drupalcode.org/cadetsviews"
+    },
+    "require": {
+        "drupal/console": "~1.0"
+    }
+}
