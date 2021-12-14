@@ -1,0 +1,21 @@
+div.cadetsviews-status-button {
+  padding: 1em;
+  border: 1px solid #ccc;
+  cursor: default;
+}
+
+div.cadetsviews-status-button-unselected {
+  color: #666;
+  background: #ddd;
+  cursor: pointer;
+}
+
+div.cadetsviews-status-button-selected {
+  color: #000;
+  background: #fff;
+}
+
+div.cadetsviews-status-button-inprogress {
+  color: #fff;
+  background: #ddd;
+}

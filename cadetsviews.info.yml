@@ -1,5 +1,6 @@
-name: 'cadetsviews'
+name: 'Cadets Views'
 type: module
-description: 'My Awesome Module'
+description: 'Custom code-based alterations of Drupal views'
 core: 8.x
 package: 'Custom'
+version: 8.x-1.0

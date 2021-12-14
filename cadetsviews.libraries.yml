@@ -1,0 +1,9 @@
+medicalChartButtons:
+  version: 1.x
+  js:
+    js/medicalChartButtons.js: {}    
+  css:
+    layout:
+      css/medicalChartButtons_layout.css: {}
+  dependencies:
+      - core/drupal.message      

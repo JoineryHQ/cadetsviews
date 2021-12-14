@@ -16,7 +16,7 @@ function cadetsviews_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.cadetsviews':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('My Awesome Module') . '</p>';
+      $output .= '<p>Please see <a href="https://github.com/JoineryHQ/cadetsviews#readme">README.md</a>.</p>';
       return $output;
 
     default:
