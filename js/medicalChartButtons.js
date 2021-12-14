@@ -97,7 +97,7 @@ CRM.$(function($) {
   for (var i in drupalSettings.cadetsviews.statusIds) {
     var buttonStatusId = drupalSettings.cadetsviews.statusIds[i];
     var content = '<div class="cadetsviews-status-button cadetsviews-status-button-unselected" data-cadetsviews-button-status-id="' + buttonStatusId + '">' + drupalSettings.cadetsviews.statusLabels[buttonStatusId] + '</div>';
-    statusMarker.after(content);
+    statusMarker.before(content);
   }
   // Define a click handler for all of our buttons.
   $('div.cadetsviews-status-button').click(statusButtonClick);
