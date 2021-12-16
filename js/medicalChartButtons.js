@@ -42,11 +42,10 @@ CRM.$(function($) {
     // Mark all buttons as in-progress
     $('div.cadetsviews-status-button').addClass('cadetsviews-status-button-inprogress');
 
-    // update status with civicrm ajax api:
-    CRM.api4('Activity', 'update', {
-      where: [["id", "=", drupalSettings.cadetsviews.activityId]],
-      values: {"status_id":$(this).data('cadetsviews-button-status-id')},
-      reload: true,
+    // update status with civicrm ajax api:`
+    CRM.api3('cadetsviews', 'updateactivitystatus', {
+      "id": drupalSettings.cadetsviews.activityId,
+      "status_id": $(this).data('cadetsviews-button-status-id')
     }).then(function(result) {
       handleStatusButtonAjaxResponse(result);
     }, function(error) {
@@ -70,10 +69,14 @@ CRM.$(function($) {
    * Process ajax non-error response from civicrm ajax api.
    */
   var handleStatusButtonAjaxResponse = function handleStatusButtonAjaxResponse(result) {
+    // Handle api3 'is_error' responses:
+    if (result.is_error) {
+      handleStatusButtonAjaxError(result);
+    }
     // Get the newly defined status id; then 
     // update button states accordingly
     // and display a message that that the status was saved.
-    var updatedStatusId = result[0].status_id;
+    var updatedStatusId = result.values.status_id;
     setButtonStatus(updatedStatusId);
     setMessage('Status updated to: ' + drupalSettings.cadetsviews.statusLabels[updatedStatusId]);
   };
@@ -82,8 +85,18 @@ CRM.$(function($) {
    * Process ajax error response from civicrm ajax api.
    */
   var handleStatusButtonAjaxError = function handleStatusButtonAjaxError(error) {
+    var error_message;
+    if (typeof error == 'undefined' || typeof error.error_message == 'undefined') {
+      error_message = 'Uknown error';
+    }
+    else if (error.error_code == "unauthorized") {
+      error_message = "You do not have permission to make this change.";
+    }
+    else {
+      error_message = error.error_message;
+    }
     // Display an error message.
-    setMessage(error.error_message, {type: 'error'});
+    setMessage('Error: ' + error_message, {type: 'error'});
     // We don't know what to do now; to allow the user some control, set all buttons to "unselected".
     setButtonStatus();
   };
@@ -93,14 +106,23 @@ CRM.$(function($) {
   // Note the current status Id.
   var statusId = statusMarker.data('cadetsviews-activity-status-id');
 
-  // Insert all our buttons in order.
-  for (var i in drupalSettings.cadetsviews.statusIds) {
-    var buttonStatusId = drupalSettings.cadetsviews.statusIds[i];
-    var content = '<div class="cadetsviews-status-button cadetsviews-status-button-unselected" data-cadetsviews-button-status-id="' + buttonStatusId + '">' + drupalSettings.cadetsviews.statusLabels[buttonStatusId] + '</div>';
-    statusMarker.before(content);
+  var buttonContent;
+  if (drupalSettings.cadetsviews.hasPermission) {
+    // Insert all our buttons in order.
+    for (var i in drupalSettings.cadetsviews.statusIds) {
+      var buttonStatusId = drupalSettings.cadetsviews.statusIds[i];
+      buttonContent = '<div class="cadetsviews-status-button cadetsviews-status-button-unselected" data-cadetsviews-button-status-id="' + buttonStatusId + '">' + drupalSettings.cadetsviews.statusLabels[buttonStatusId] + '</div>';
+      statusMarker.before(buttonContent);
+    }
+    // Define a click handler for all of our buttons.
+    $('div.cadetsviews-status-button').click(statusButtonClick);
   }
-  // Define a click handler for all of our buttons.
-  $('div.cadetsviews-status-button').click(statusButtonClick);
+  else {
+    // If user doesn't have permission to update, just show the current status.
+    buttonContent = '<div class="cadetsviews-status-button" data-cadetsviews-button-status-id="' + statusId + '">' + drupalSettings.cadetsviews.statusLabels[statusId] + '</div>';
+    statusMarker.before(buttonContent);    
+  }
+  
   // Remove the status marker as it's no longer needed.
   statusMarker.remove();
 

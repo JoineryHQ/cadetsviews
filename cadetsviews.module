@@ -22,3 +22,55 @@ function cadetsviews_help($route_name, RouteMatchInterface $route_match) {
     default:
   }
 }
+
+/**
+ * Implements hook_civicrm_permission().
+ * Drupal hook_permission() could work just as well, but this permission specifically
+ * relates to civicrm api, so using civicrm hook.
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_permission
+ */
+function cadetsviews_civicrm_permission(&$permissions) {
+  $permissions['cadetsviews_update_activity_status'] = [
+    ts('CadetsViews: Update Activity Status'),
+    ts('Allow altering activity status through buttons in CadetsViews'),
+  ];
+}
+
+ /* Implements hook_civicrm_alterAPIPermissions().
+  * Required to establish permissions for our custom api.
+  * 
+  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterAPIPermissions
+  */
+   function cadetsviews_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+  $permissions['cadetsviews']['updateactivitystatus'] = ['cadetsviews_update_activity_status'];
+}
+
+/**
+ * Implements hook_civicrm_config().
+ * Copied/modified from civix boilerplate (because this is not a civicrm extension).
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
+ */
+function cadetsviews_civicrm_config(&$config) {
+  static $configured = FALSE;
+  if ($configured) {
+    return;
+  }
+  $configured = TRUE;
+
+  $template =& CRM_Core_Smarty::singleton();
+
+  $extRoot = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'civicrm' . DIRECTORY_SEPARATOR;
+  $extDir = $extRoot . 'templates';
+
+  if (is_array($template->template_dir)) {
+    array_unshift($template->template_dir, $extDir);
+  }
+  else {
+    $template->template_dir = [$extDir, $template->template_dir];
+  }
+
+  $include_path = $extRoot . PATH_SEPARATOR . get_include_path();
+  set_include_path($include_path);
+}

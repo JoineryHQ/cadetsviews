@@ -5,6 +5,9 @@ use Drupal\views\ViewExecutable;
  * Implements hook_views_pre_render().
  */
 function cadetsviews_views_pre_render(ViewExecutable $view) {
+  // Indicate in JS whether user has permission to update.
+  $view->element['#attached']['drupalSettings']['cadetsviews']['hasPermission'] = \Drupal::currentUser()->hasPermission('cadetsviews_update_activity_status');
+
   // Load settings for this module, which are probably in drupal's settings.php.
   $settings = \Drupal::config('cadetsviews')->get();
   // If certain settings are defined, and if they match attributes of this view,
@@ -34,13 +37,12 @@ function cadetsviews_views_pre_render(ViewExecutable $view) {
       // Assign each of these, keyed to ID, for usage in JS.
       $view->element['#attached']['drupalSettings']['cadetsviews']['statusLabels'][$optionValue['value']] = $optionValue['label'];
     }
-    
+
     // Assign config list of relevant status IDs for usage in JS.
     $view->element['#attached']['drupalSettings']['cadetsviews']['statusIds'] = $medicalChartWithButtonsActivityStatusIds;
     // Assign the current activity ID for usage in JS.
     $view->element['#attached']['drupalSettings']['cadetsviews']['activityId'] = $view->argument['id']->argument;
     // Attach our library of JS and CSS files.
     $view->element['#attached']['library'][] = 'cadetsviews/medicalChartButtons';
-
   }
 }
