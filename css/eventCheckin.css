@@ -1,13 +1,19 @@
+/* Pop-up container showing links for each available status. 
+ */
 div#cadetsviews-event-checkin-status-controls {
-  display: none;
   position: absolute;
   background-color: #eeeeee;
   border: 1px solid lightgrey;
   padding: 1em;  
   width: 280px;
   margin-left: -200px;
+  
+  /* We begin with no display because this element should only be shown under certain circumstances */  
+  display: none; 
 }
 
+/* Individual links for each available status, within the pop-up container. 
+ */
 div#cadetsviews-event-checkin-status-controls a.cadetsviews-event-checkin-set-status {
   display: block;
   padding: .25em;
@@ -16,30 +22,25 @@ div#cadetsviews-event-checkin-status-controls a.cadetsviews-event-checkin-set-st
   text-decoration: none;
   border: none;
 }
+
+/* Hover state for individual liks for each available status. 
+ */
 div#cadetsviews-event-checkin-status-controls a.cadetsviews-event-checkin-set-status:hover {
   background-color: grey;
   text-decoration: none;  
   border: none;
 }
 
-i#cadetsviews-event-checkin-error-marker-template {
-  display: none;
-}
-
+/* Among the links for available statuses, this is the one that matches the current
+ * status for the given participant. This helps the user to see which one is currently
+ * selected, in case the pop-up covers that part of the Views output row. 
+ */
 div#cadetsviews-event-checkin-status-controls a.cadetsviews-event-checkin-set-status-is-active {
   background-color: lightgreen; 
 }
 
-tr[data-cadetsviews-event-checkin-state="active"] {
-  background-color: lightblue !important;
-}
-tr[data-cadetsviews-event-checkin-state="sent"] {
-  background-color: lightyellow !important;
-}
-tr[data-cadetsviews-event-checkin-state="saved"] {
-  background-color: lightgreen !important;
-}
-
+/* Clickable "X" control to close the pop-up of available statuses.
+ */
 div#cadetsviews-event-checkin-status-controls-cancel {
   color: red;
   cursor: pointer;
@@ -47,11 +48,52 @@ div#cadetsviews-event-checkin-status-controls-cancel {
   text-align: right;
 }
 
+/* Row status: Active (see README)
+ */
+tr[data-cadetsviews-event-checkin-state="active"] {
+  background-color: lightblue !important;
+}
+/* Row status: Sent (see README)
+ */
+tr[data-cadetsviews-event-checkin-state="sent"] {
+  background-color: lightyellow !important;
+}
+/* Row status: Saved (see README)
+ */
+tr[data-cadetsviews-event-checkin-state="saved"] {
+  background-color: lightgreen !important;
+}
+
+
+/* "Template" from which all error-icons are copied. This one is "display: none" 
+ * because it should never display. Icons copied from this one will be displayed
+ * or hidden dynamically in JavaScript */
+i#cadetsviews-event-checkin-error-marker-template {
+  display: none;
+}
+
+/* Clickable "view error" control, created as a copy of "template" icon (above)
+ * for any participant row which has an error.
+ */
 i.cadetsviews-event-checkin-error-marker {
   padding-left: 1em;
   color: red;
   cursor: pointer;
 }
+
+/* Clickable "X" control to hide the error message.
+ */
+div#cadetsviews-event-checkin-error-viewer-close {
+  text-align: right;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Wrapper which contains the error message for any given row. There is only
+ * one such wrapper -- i.e. only one error viewer, so we can only see the
+ * error message for one row at a time.
+ */
 div#cadetsviews-event-checkin-error-viewer {
   border: 1px solid red;
   background: white;
@@ -59,11 +101,4 @@ div#cadetsviews-event-checkin-error-viewer {
   position: absolute;
   margin-left: -40em;
   margin-right: 12em;  
-}
-
-div#cadetsviews-event-checkin-error-viewer-close {
-  text-align: right;
-  color: red;
-  font-weight: bold;
-  cursor: pointer;
 }
