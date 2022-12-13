@@ -29,10 +29,16 @@ CRM.$(function($) {
   }
   
   var displayControls = function displayControls (clickedStatusElement) {
+    // We're going to clone our template div into a new div. But first, make sure
+    // no such new div already exists.
+    $('#cadetsviews-event-checkin-status-controls').remove();
+    // Now clone it and change the id.
+    var elControls = $('#cadetsviews-event-checkin-status-controls-template').clone(true, true);
+    elControls.attr('id', 'cadetsviews-event-checkin-status-controls');
     // Inject our status controls div just before the clicked "status" link.
-    $(clickedStatusElement).before($('#cadetsviews-event-checkin-status-controls'));
+    $(clickedStatusElement).before(elControls);
     // Display the controls.
-    $('#cadetsviews-event-checkin-status-controls').show();
+    elControls.show();
     // Clear state on any other rows having "active" status.
     $('tr[data-cadetsviews-event-checkin-state="active"] a.cadetsviews-update-participant-status').each(function(idx, el) {
       var participantId = $(el).data('cadetsviews-participant-id');

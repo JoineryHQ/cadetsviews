@@ -1,4 +1,4 @@
-<div id="cadetsviews-event-checkin-status-controls">
+<div id="cadetsviews-event-checkin-status-controls-template">
   <div id="cadetsviews-event-checkin-status-controls-cancel">X</div>
   {foreach from=$statusOptions key=statusId item=statusLabel}
   <a href="#" data-cadetsviews-event-checkin-set-status-participant-id="" data-cadetsviews-event-checkin-set-status-id="{$statusId}" class="cadetsviews-event-checkin-set-status">{$statusLabel}</a>
