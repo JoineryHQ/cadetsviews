@@ -9,7 +9,11 @@ Licensed under [GNU GENERAL PUBLIC LICENSE, Version 2](LICENSE.txt)
 
 ## Functionality
 
-Into a given view (per configuration in Drupal's settings.php), which is expected
+This module supports two types of specialized behavior on Drupal Views:
+
+### "Medical Chart" activity status updates
+
+Into a given view display (per configuration in Drupal's settings.php), which is expected
 to represent a single CiviCRM activity, inject functionality along these lines:
 
 * Assume the existence of, and identify, the html element
@@ -33,10 +37,32 @@ Selected state; the others will be unselected.
   * Apply the Selected state to the button representing the currently saved status.
   * Apply the Unselected state to other buttons.
 
+### "Event Check-in" participant status updates
+Into a given view (per configuration in Drupal's settings.php), which is expected
+to represent a collection of CiviCRM participant records, inject functionality along these lines:
+
+* Assume that the View output is in tabular format.
+* In each row of the output table, assume the existence of, and identify, an html element `<a href="#" data-cadetsviews-participant-id="N" class="cadetsviews-update-participant-status">Attended</a>`
+where N is the numeric ID of the row's participant record; this field is expected to
+exist in the output of the given view.
+* Attach a click handler to this element, so that, when this element is clicked, a sufficiently permissioned user will see: A pop-up offering various Participant Status options, each as a clickable link.
+* When the user clicks one of these statuses, an API call is sent to CiviCRM to update this participant record with the selected status.
+* Any errors from this API call are displayed to the user within the given table row.
+* While one status change request is being processed, the user can continue making similar requests on other rows (i.e., the user need not wait for completion of one request before moving on to make another).
+* Each participant record will be assigned a visual state during certain portions of the workflow, to help the user be aware of the state of each status change request:
+  * Active: The list of participant status options is being displayed for this participant record.
+  * Sent: A request to change the status of this participant record has been sent to the server.
+  * Saved: The requested status change was succesfully made on the server; this state indicator will be un-set after a few seconds.
+  * None: The default state when none of the above states are relevant for this participant record.
+
+
 ## Configuration:
 
 Configuration is defined through variables in Drupal's settings.php. Available
-configurations are these; all are required:
+configurations are as follows, for each of the types of specialized behavior:
+### "Medical Chart" activity status updates
+
+Settings are defined by array key/value pairs directly within the `$config['cadetsviews']` array:
 
 ```
 $config['cadetsviews'] = [
@@ -51,6 +77,24 @@ $config['cadetsviews'] = [
   'medicalChartWithButtonsActivityStatusIds' => [],       // For example, [3,2,1]
 ];
 ```
+### "Event Check-in" participant status updates
+
+Settings are defined by array key/value pairs within the `$config['cadetsviews']['event_checkin']` array:
+
+```
+$config['cadetsviews'] = [
+  // Configurations for event_checkin behaviors:
+  'event_checkin' => [
+    // Which view.
+    'viewId' => '',                         // For example, 'camp_check_in'.
+    // Which display in this view.
+    'displayId' => '',                      // For example, 'page_1'.
+    // Valid participant status IDs (set an empty array to allow all statuses).
+    'participantStatusIds' => [],        // For example, [1,2].
+  ]
+];
+```
+
 
 ## Support
 ![Joinery](/images/joinery-logo.png)

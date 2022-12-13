@@ -1,0 +1,69 @@
+div#cadetsviews-event-checkin-status-controls {
+  display: none;
+  position: absolute;
+  background-color: #eeeeee;
+  border: 1px solid lightgrey;
+  padding: 1em;  
+  width: 280px;
+  margin-left: -200px;
+}
+
+div#cadetsviews-event-checkin-status-controls a.cadetsviews-event-checkin-set-status {
+  display: block;
+  padding: .25em;
+  margin: .25em;
+  background-color: lightgrey;
+  text-decoration: none;
+  border: none;
+}
+div#cadetsviews-event-checkin-status-controls a.cadetsviews-event-checkin-set-status:hover {
+  background-color: grey;
+  text-decoration: none;  
+  border: none;
+}
+
+i#cadetsviews-event-checkin-error-marker-template {
+  display: none;
+}
+
+div#cadetsviews-event-checkin-status-controls a.cadetsviews-event-checkin-set-status-is-active {
+  background-color: lightgreen; 
+}
+
+tr[data-cadetsviews-event-checkin-state="active"] {
+  background-color: lightblue !important;
+}
+tr[data-cadetsviews-event-checkin-state="sent"] {
+  background-color: lightyellow !important;
+}
+tr[data-cadetsviews-event-checkin-state="saved"] {
+  background-color: lightgreen !important;
+}
+
+div#cadetsviews-event-checkin-status-controls-cancel {
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: right;
+}
+
+i.cadetsviews-event-checkin-error-marker {
+  padding-left: 1em;
+  color: red;
+  cursor: pointer;
+}
+div#cadetsviews-event-checkin-error-viewer {
+  border: 1px solid red;
+  background: white;
+  padding: 1em;
+  position: absolute;
+  margin-left: -40em;
+  margin-right: 12em;  
+}
+
+div#cadetsviews-event-checkin-error-viewer-close {
+  text-align: right;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}

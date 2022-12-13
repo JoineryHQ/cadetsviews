@@ -35,6 +35,10 @@ function cadetsviews_civicrm_permission(&$permissions) {
     ts('CadetsViews: Update Activity Status'),
     ts('Allow altering activity status through buttons in CadetsViews'),
   ];
+  $permissions['cadetsviews_update_participant_status'] = [
+    ts('CadetsViews: Update Participant Status'),
+    ts('Allow altering participant status through buttons in CadetsViews'),
+  ];
 }
 
  /* Implements hook_civicrm_alterAPIPermissions().
@@ -42,8 +46,9 @@ function cadetsviews_civicrm_permission(&$permissions) {
   * 
   * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterAPIPermissions
   */
-   function cadetsviews_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+function cadetsviews_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
   $permissions['cadetsviews']['updateactivitystatus'] = ['cadetsviews_update_activity_status'];
+  $permissions['cadetsviews']['updateparticipantstatus'] = ['cadetsviews_update_participant_status'];
 }
 
 /**

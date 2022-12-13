@@ -7,3 +7,12 @@ medicalChartButtons:
       css/medicalChartButtons_layout.css: {}
   dependencies:
       - core/drupal.message      
+eventCheckin:
+  version: 1.x
+  js:
+    js/eventCheckin.js: {}    
+  css:
+    layout:
+      css/eventCheckin.css: {}
+  dependencies:
+      - core/drupal.message      
