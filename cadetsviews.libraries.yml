@@ -16,3 +16,10 @@ eventCheckin:
       css/eventCheckin.css: {}
   dependencies:
       - core/drupal.message      
+auditionhub:
+  version: 1.x
+  js:
+    js/auditionhub.js: {}    
+  css: {}
+  dependencies:
+    - core/jquery
