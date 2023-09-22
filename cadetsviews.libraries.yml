@@ -20,6 +20,8 @@ auditionhub:
   version: 1.x
   js:
     js/auditionhub.js: {}    
-  css: {}
+  css:
+    layout:
+      css/auditionhub.css: {}
   dependencies:
     - core/jquery
