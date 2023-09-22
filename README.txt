@@ -9,7 +9,7 @@ Licensed under [GNU GENERAL PUBLIC LICENSE, Version 2](LICENSE.txt)
 
 ## Functionality
 
-This module supports two types of specialized behavior on Drupal Views:
+This module supports various types of specialized behavior on Drupal Views:
 
 ### "Medical Chart" activity status updates
 
@@ -56,6 +56,13 @@ exist in the output of the given view.
   * None: The default state when none of the above states are relevant for this participant record.
 
 
+### "auditionhub" library
+
+This library consists of CSS and JavaScript files that aim to provide customized behavior on the "AuditionHUB" view:
+
+* Insert a "Download csv" button that links to a CSV download of the filtered view results.
+* Move the views result header (which reports total records found) to below the filter form.
+
 ## Configuration:
 
 Configuration is defined through variables in Drupal's settings.php. Available
@@ -95,6 +102,11 @@ $config['cadetsviews'] = [
 ];
 ```
 
+### "auditionhub" library
+
+This library should be attached to the AuditionHUB view by means of the features of the [Views Attach Library](https://www.drupal.org/project/views_attach_library) module:
+
+* The library to attach is `cadetsviews/auditionhub`
 
 ## Support
 ![Joinery](/images/joinery-logo.png)
